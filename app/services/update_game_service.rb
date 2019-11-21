@@ -1,19 +1,27 @@
 class UpdateGameService
 
-  def initialize(game, x, y)
+  YOU_WIN = 'Win'
+  NEXT_MOVEMENT = 'Next movement'
+  GAME_OVER = 'Lost'
+
+  def initialize(game_instance, game, x, y)
     @game = game
     @board = @game.board
-    @x = x
-    @y = y
+    @x = x.to_i
+    @y = y.to_i
+    @game_instance = game_instance
   end
 
   def play
-    play_turn while @game.in_progress?
+    play_turn
 
     if @game.lost?
-      puts 'game over'
+      GAME_OVER
     elsif @game.won?
       winning_board = show_flags_on_winning_board(@board.visible_board)
+      YOU_WIN
+    else
+      NEXT_MOVEMENT
     end
   end
 
@@ -21,9 +29,14 @@ class UpdateGameService
 
   def play_turn
     guess = CoordinatePair.new(@x, @y)
-
-    @game.game_lost = true if @game.mine?(guess)
+    game_over if @game.mine?(guess)
     @game.reveal_guess(guess, @board.visible_board)
+    @game_instance.update(visible_board: @board.visible_board)
+  end
+
+  def game_over
+    @game.game_lost = true
+    @game_instance.update(game_lost: true)
   end
 
   def show_flags_on_winning_board

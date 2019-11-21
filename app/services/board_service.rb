@@ -24,7 +24,7 @@ class BoardService
     end
   end
 
-  attr_reader :mine_board, :visible_board
+  attr_accessor :mine_board, :visible_board
 
   private
 

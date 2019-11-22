@@ -8,6 +8,10 @@ gem 'pg'
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'rswag'
 
+group :production, :test do
+  gem 'rspec-rails', '~> 3.9'
+end
+
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'rspec-rails', '~> 3.9'

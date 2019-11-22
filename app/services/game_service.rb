@@ -8,6 +8,9 @@ class GameService
     @empty_cells = []
   end
 
+  attr_accessor :board
+  attr_accessor :game_lost
+
   def won?
     untouched_cells = @board.visible_board.flatten.count(BoardService::HIDDEN_CELL)
     number_of_mines = @board.mine_board.flatten.count(BoardService::MINE)
@@ -20,10 +23,6 @@ class GameService
 
   def lost?
     @game_lost
-  end
-
-  def guess_valid?(input)
-    number?(input) && number_in_range?(input)
   end
 
   def mine?(guess)
@@ -46,9 +45,6 @@ class GameService
       board[coordinates.y][coordinates.x] = number
     end
   end
-
-  attr_reader :board
-  attr_accessor :game_lost
 
   private
 
@@ -132,13 +128,4 @@ class GameService
       @board.visible_board[cell.y][cell.x] = cell_value
     end
   end
-
-  def number?(input)
-    input.to_i != 0
-  end
-
-  def number_in_range?(input)
-    input.to_i.between?(1, BoardService::BOARD_SIZE)
-  end
-
 end

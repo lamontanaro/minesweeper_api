@@ -1,3 +1,7 @@
+# minesweeper API documentation
+ ```
+ https://minesweeperapi.herokuapp.com/api-docs/index.html
+ ```
 # minesweeper-API
 API test
 

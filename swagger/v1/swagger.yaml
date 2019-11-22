@@ -1,0 +1,61 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  "/games":
+    post:
+      summary: Create game
+      tags:
+      - Games
+      consumes:
+      - application/json
+      responses:
+        '200':
+          description: game created
+        '500':
+          description: error
+  "/games/{id}":
+    patch:
+      summary: Send coordinates
+      tags:
+      - Games
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        schema:
+            type: integer
+        required: true
+      - name: x
+        in: path
+        schema:
+            type: integer
+        required: true
+      - name: y
+        in: path
+        schema:
+            type: integer
+        required: true
+      responses:
+        '200':
+          description: id found
+          schema:
+            type: object
+            properties:
+              id:
+                type: integer
+              visible_board:
+                type: text
+              mine_board:
+                type: text
+              game_lost:
+                type: boolean
+            required:
+            - id
+            - name
+            - status
+        '404':
+          description: Game not found
